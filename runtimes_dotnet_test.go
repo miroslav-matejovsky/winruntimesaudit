@@ -11,7 +11,10 @@ func TestDotNetRuntimesAudit(t *testing.T) {
 	require.NoError(t, err)
 	require.NotNil(t, dotnet)
 	for _, d := range dotnet {
-		t.Logf("Version: %s, Installed: %t\nPath: %s", d.Version, d.Installed, d.Path)
+		t.Log("Type: ", d.Type)
+		t.Log("Version: ", d.Version)
+		t.Log("Path: ", d.Path)
+		require.NotEmpty(t, d.Type)
 		require.NotEmpty(t, d.Version)
 		require.NotEmpty(t, d.Path)
 	}
