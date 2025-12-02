@@ -6,7 +6,7 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-func TestVcRedist(t *testing.T) {
+func TestVcRedistRuntimesAudit(t *testing.T) {
 	vcRedist, err := DoVCRedistAudit()
 	require.NoError(t, err)
 	require.NotNil(t, vcRedist)
