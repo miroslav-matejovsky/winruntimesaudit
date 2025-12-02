@@ -18,6 +18,12 @@ type DotNetRuntime struct {
 // DotNetRuntimesAuditResult holds the results of auditing .NET runtimes.
 // It uses dotnet --list-runtimes to gather information about installed runtimes.
 func DotNetRuntimesAuditResult() ([]DotNetRuntime, error) {
+	// Check if dotnet command exists
+	if _, err := exec.LookPath("dotnet"); err != nil {
+		// dotnet not found, return empty list
+		return []DotNetRuntime{}, nil
+	}
+
 	cmd := exec.Command("dotnet", "--list-runtimes")
 	output, err := cmd.Output()
 	if err != nil {
