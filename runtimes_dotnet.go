@@ -9,9 +9,10 @@ import (
 
 // DotNetRuntime represents a .NET runtime installation on a Windows system.
 type DotNetRuntime struct {
-	Type    string
-	Version string
-	Path    string
+	// Full name of the runtime, one of "Microsoft.AspNetCore.App", "Microsoft.NETCore.App", "Microsoft.WindowsDesktop.App"
+	Type     string
+	Version  string
+	Location string
 }
 
 // DotNetRuntimesAuditResult holds the results of auditing .NET runtimes.
@@ -30,18 +31,18 @@ func DotNetRuntimesAuditResult() ([]DotNetRuntime, error) {
 		if line == "" {
 			continue
 		}
-		parts := strings.Fields(line)
-		if len(parts) < 3 {
+		parts := strings.SplitN(line, " ", 3)
+		if len(parts) != 3 {
 			return nil, errors.New("unexpected output format from dotnet --list-runtimes: " + line)
 		}
 		// Assume format: Name Version [Path]
-		runtimeType := parts[0]
+		fullName := parts[0]
 		version := parts[1]
 		path := strings.Trim(parts[2], "[]")
 		runtime := DotNetRuntime{
-			Type:    runtimeType,
-			Version: version,
-			Path:    path,
+			Type:     fullName,
+			Version:  version,
+			Location: path,
 		}
 		runtimes = append(runtimes, runtime)
 	}
