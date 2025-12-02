@@ -59,3 +59,22 @@ func All() error {
 	}
 	return nil
 }
+
+// Publish publishes the module to the Go registry by tagging and pushing the version.
+// Requires VERSION environment variable to be set (e.g., VERSION=v1.0.0).
+func Publish(version string) error {
+	mg.Deps(All)
+
+	// Tag the current commit
+	if err := sh.RunV("git", "tag", version); err != nil {
+		return fmt.Errorf("failed to create git tag: %w", err)
+	}
+
+	// Push the tag to the remote repository
+	if err := sh.RunV("git", "push", "origin", version); err != nil {
+		return fmt.Errorf("failed to push git tag: %w", err)
+	}
+
+	fmt.Printf("Published version %s as a git tag\n", version)
+	return nil
+}

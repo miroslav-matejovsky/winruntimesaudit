@@ -6,9 +6,9 @@ import (
 	"golang.org/x/sys/windows/registry"
 )
 
-// VcRedistRuntime represents information about a Visual C++ Redistributable runtime.
+// VCRedistRuntime represents information about a Visual C++ Redistributable runtime.
 // It includes version, architecture, installation status, and registry path.
-type VcRedistRuntime struct {
+type VCRedistRuntime struct {
 	Version      string
 	Architecture string // either x86 or x64
 	Installed    bool
@@ -19,8 +19,8 @@ type VcRedistRuntime struct {
 // It returns a slice of VcRedistRuntime structs or an error if the audit fails.
 // This is equivalent to running the PowerShell command:
 // Get-ItemProperty -Path "HKLM:\SOFTWARE\WOW6432Node\Microsoft\VisualStudio\*\VC\Runtimes\*" | Format-Table
-func DoVCRedistAudit() ([]VcRedistRuntime, error) {
-	var vcRedistRuntimes []VcRedistRuntime
+func DoVCRedistAudit() ([]VCRedistRuntime, error) {
+	var vcRedistRuntimes []VCRedistRuntime
 	winreg := NewWinReg()
 	keyPath := `SOFTWARE\WOW6432Node\Microsoft\VisualStudio`
 	k, err := winreg.OpenKeyReadOnly(keyPath)
@@ -76,7 +76,7 @@ func DoVCRedistAudit() ([]VcRedistRuntime, error) {
 			}
 
 			// Collecting redist runtimes
-			vcRedistRuntimes = append(vcRedistRuntimes, VcRedistRuntime{
+			vcRedistRuntimes = append(vcRedistRuntimes, VCRedistRuntime{
 				Version:      version,
 				Architecture: runtimeSubKey,
 				Installed:    installed == 1,
