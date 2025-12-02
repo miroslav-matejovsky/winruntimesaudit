@@ -1,0 +1,23 @@
+{
+ "gopls": {
+  "standaloneTags": [
+   "ignore",
+   "mage"
+  ]
+ },
+ "cSpell.words": [
+  "gofmt",
+  "golangci",
+  "gotestsum",
+  "HKLM",
+  "magefile",
+  "matejovsky",
+  "miroslav",
+  "Redist",
+  "Redistributables",
+  "testdox",
+  "winreg",
+  "winregaudit",
+  "winruntimesaudit"
+ ]
+}
